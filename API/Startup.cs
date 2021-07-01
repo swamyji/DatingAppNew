@@ -43,9 +43,10 @@ namespace API
             });
 
             services.AddCors();
-
+            // This is ApplicationServicesExtension Method;
             services.AddApplicationServices(_config);
 
+            // This is IdentityServicesExtension Method;
             services.AddIdentityServices(_config);
 
 
