@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
 import { User } from '../_models/User';
 import { AccountService } from '../_services/account.service'
@@ -9,7 +11,8 @@ import { AccountService } from '../_services/account.service'
 })
 export class NavComponent implements OnInit {
 
-  constructor(public accountService: AccountService) { }
+  constructor(public accountService: AccountService, private router: Router,
+              private toastr: ToastrService) { }
 
   model: any = {}
   // loggedIn: boolean;
@@ -26,15 +29,20 @@ export class NavComponent implements OnInit {
 
   login(){
    this.accountService.login(this.model).subscribe(response =>{
-     console.log(response)
+      this.router.navigateByUrl('/members');
+      this.toastr.success('Login Success');
      //this.loggedIn = true;
    }, error => {
      console.log(error)
+     this.toastr.error(error.error);
    })
   }
 
   logout(){
     this.accountService.logout();
+    this.router.navigateByUrl('/');
+    this.toastr.info('You are loggedout...!');
+
     //this.loggedIn = false;
   }
 
