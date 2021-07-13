@@ -1,4 +1,5 @@
 using API.Data;
+using API.Helpers;
 using API.Interfeces;
 using API.Services;
 using Microsoft.EntityFrameworkCore;
@@ -17,7 +18,11 @@ namespace API.Extensions
                 options.UseSqlServer(config.GetConnectionString("DefaultConnection"));
             });
 
+            services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
+
             services.AddScoped<ITokenService, TokenService>();
+
+            services.AddScoped<IUserRepository, UserRepository>();
 
             return services;
 
