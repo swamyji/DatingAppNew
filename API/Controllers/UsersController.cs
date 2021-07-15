@@ -33,7 +33,6 @@ namespace API.Controllers
 
             return Ok(users);
 
-         
         }
 
         //api/users/2
