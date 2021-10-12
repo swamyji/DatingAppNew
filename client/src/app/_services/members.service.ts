@@ -56,6 +56,8 @@ export class MembersService {
 
   }
 
+  // helper methods
+
   getUserParams(){
     return this.userParams;
   }
@@ -75,6 +77,7 @@ export class MembersService {
           .find((member: Member) => member.username === username)
 
     if( member) return of(member);
+
     return this.http.get<Member>(this.baseUrl+'users/'+username);
   }
 
@@ -95,6 +98,16 @@ export class MembersService {
 
   deletePhoto(photoId:number){
     return this.http.delete(this.baseUrl+'users/delete-photo/'+photoId);
+  }
+
+  addLike(username: string){
+    return this.http.post(this.baseUrl + 'likes/' + username, {})
+  }
+
+  getLikes(predicate: string, pageNumber, pageSize){
+    let params = this.getPaginationHeaders(pageNumber, pageSize);
+    params = params.append('predicate', predicate);
+    return this.getPaginatedResult<Partial<Member[]>>(this.baseUrl+'likes', params);
   }
 
   private getPaginatedResult<T>(url, params) {
